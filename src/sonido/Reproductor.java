@@ -1,11 +1,8 @@
 package sonido;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import interfaz.Gui;
 import javazoom.jl.player.advanced.AdvancedPlayer;
-import javazoom.jl.player.advanced.PlaybackEvent;
-import javazoom.jl.player.advanced.PlaybackListener;
 import procesamiento.Cola;
 import procesamiento.convierte;
 
@@ -17,7 +14,6 @@ import procesamiento.convierte;
 public class Reproductor implements Runnable{
 
 	private byte[]array1;
-	private int pausedOnFrame = 0;
 	
 	Thread t;
 	String ruta;
@@ -58,6 +54,7 @@ public class Reproductor implements Runnable{
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void siguiente()
 	{
 		ruta = cola.siguiente();
@@ -66,6 +63,7 @@ public class Reproductor implements Runnable{
 		t.start();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void anterior()
 	{
 		ruta = cola.anterior();
@@ -75,12 +73,14 @@ public class Reproductor implements Runnable{
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void pause(){
 	   
 		t.suspend();
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void reanudar()
 	{
 		t.resume();

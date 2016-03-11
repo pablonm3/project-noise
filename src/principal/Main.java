@@ -1,17 +1,8 @@
 package principal;
 
 import java.io.File;
-import java.nio.Buffer;
-
 import javax.swing.JFileChooser;
-
-import org.apache.commons.collections.buffer.CircularFifoBuffer;
-
-import com.echonest.api.v3.EchoNestException;
-import com.echonest.api.v3.test.EchonestDevShell;
-
 import audioAnalisis.Bpm;
-import audioAnalisis.bpm2;
 import interfaz.Gui;
 import procesamiento.Cola;
 import procesamiento.convierte;
@@ -21,7 +12,6 @@ public class Main {
 
 	public static void main(String args[])
 	{
-		// RANDOM COMMENT2
 		Cola cola;
 		JFileChooser chooser = new JFileChooser();
 		chooser.setMultiSelectionEnabled(true);
