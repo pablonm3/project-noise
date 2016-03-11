@@ -1,3 +1,3 @@
 # project-noise
-![alt tag](https://www.dropbox.com/s/hwksp9m5qba13bg/Capture.PNG?dl=0)
+![alt tag](http://postimg.org/image/rgdeoz237/)
 java music player
