@@ -21,7 +21,7 @@ public class Main {
 
 	public static void main(String args[])
 	{
-		// RANDOM COMMENT
+		// RANDOM COMMENT2
 		Cola cola;
 		JFileChooser chooser = new JFileChooser();
 		chooser.setMultiSelectionEnabled(true);
