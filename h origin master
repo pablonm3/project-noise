@@ -1,0 +1,2153 @@
+[1mdiff --git a/EchoNestAPI.jar b/EchoNestAPI.jar[m
+[1mdeleted file mode 100644[m
+[1mindex 7ff714c..0000000[m
+Binary files a/EchoNestAPI.jar and /dev/null differ
+[1mdiff --git a/JMF-2.1.1e/bin/JMF.ico b/JMF-2.1.1e/bin/JMF.ico[m
+[1mdeleted file mode 100644[m
+[1mindex c60cf1b..0000000[m
+Binary files a/JMF-2.1.1e/bin/JMF.ico and /dev/null differ
+[1mdiff --git a/JMF-2.1.1e/bin/jmfcustomizer b/JMF-2.1.1e/bin/jmfcustomizer[m
+[1mdeleted file mode 100644[m
+[1mindex a03251d..0000000[m
+[1m--- a/JMF-2.1.1e/bin/jmfcustomizer[m
+[1m+++ /dev/null[m
+[36m@@ -1,88 +0,0 @@[m
+[31m-#!/bin/sh[m
+[31m-#[m
+[31m-# A script to launch the JMFCustomizer java application.[m
+[31m-[m
+[31m-#[m
+[31m-# If a path name is a symbolic link, resolve it.[m
+[31m-#[m
+[31m-GetRealPath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-	level=1[m
+[31m-[m
+[31m-	while [ -h "$pathName" ] ; do[m
+[31m-		level=`/bin/expr $level + 1`[m
+[31m-		if [ $level -gt 10 ] ; then[m
+[31m-			echo "$pathName: too many levels of symbolic links"[m
+[31m-			break;[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# First, make sure we have an absolute path name.[m
+[31m-		#[m
+[31m-		if IsRelativePath "$pathName" ; then[m
+[31m-			pathName=`/bin/pwd`/"$pathName"[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# Then determine where the link points (via "ls -l")[m
+[31m-		#[m
+[31m-		dirName=`/bin/dirname $pathName`[m
+[31m-		link=`/bin/ls -l $pathName | sed -e 's,.* -> ,,g'`[m
+[31m-[m
+[31m-		if IsRelativePath "$link" ; then[m
+[31m-			pathName="$dirName"/"$link"[m
+[31m-		else[m
+[31m-			pathName="$link"[m
+[31m-		fi[m
+[31m-	done[m
+[31m-[m
+[31m-	echo "$pathName"[m
+[31m-[m
+[31m-	return 0[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Is this a relative path name (i.e., doesn't begin with "/")?[m
+[31m-#[m
+[31m-IsRelativePath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-[m
+[31m-	if [ `echo "$pathName" | sed -e 's,^/.*,absolute,g'` = "absolute" ] ; then[m
+[31m-		return 1[m
+[31m-	else[m
+[31m-		return 0[m
+[31m-	fi[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Figure out the real path to this shell script and then setup[m
+[31m-# the JMFHOME environment[m
+[31m-#[m
+[31m-PROGPATH=`GetRealPath $0`[m
+[31m-TMPDIR=`dirname $PROGPATH`[m
+[31m-JMFHOME=`( cd $TMPDIR/.. && /bin/pwd )`; export JMFHOME[m
+[31m-[m
+[31m-CLASSPATH=${JMFHOME}/lib/jmf.jar:${JMFHOME}/lib/sound.jar:${JMFHOME}/lib/customizer.jar:${CLASSPATH}; export CLASSPATH[m
+[31m-[m
+[31m-LD_LIBRARY_PATH=.:/usr/openwin/lib:${JMFHOME}/lib:${LD_LIBRARY_PATH}; export LD_LIBRARY_PATH[m
+[31m-[m
+[31m-# Use this to run with native threads:[m
+[31m-# THREADS_FLAG=native; export THREADS_FLAG[m
+[31m-[m
+[31m-# If it's running on Solaris 2.6, we are forced to use native threads.[m
+[31m-UNAME=`uname -r`[m
+[31m-case $UNAME in[m
+[31m-5.6) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.6.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-esac[m
+[31m-[m
+[31m-if [ $# -gt 0 ]; then[m
+[31m-	FILE=$1	[m
+[31m-fi[m
+[31m-exec java JMFCustomizer[m
+[1mdiff --git a/JMF-2.1.1e/bin/jmfinit b/JMF-2.1.1e/bin/jmfinit[m
+[1mdeleted file mode 100644[m
+[1mindex aa560ea..0000000[m
+[1m--- a/JMF-2.1.1e/bin/jmfinit[m
+[1m+++ /dev/null[m
+[36m@@ -1,88 +0,0 @@[m
+[31m-#!/bin/sh[m
+[31m-#[m
+[31m-# A script to launch the Export java application.[m
+[31m-[m
+[31m-#[m
+[31m-# If a path name is a symbolic link, resolve it.[m
+[31m-#[m
+[31m-GetRealPath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-	level=1[m
+[31m-[m
+[31m-	while [ -h "$pathName" ] ; do[m
+[31m-		level=`/bin/expr $level + 1`[m
+[31m-		if [ $level -gt 10 ] ; then[m
+[31m-			echo "$pathName: too many levels of symbolic links"[m
+[31m-			break;[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# First, make sure we have an absolute path name.[m
+[31m-		#[m
+[31m-		if IsRelativePath "$pathName" ; then[m
+[31m-			pathName=`/bin/pwd`/"$pathName"[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# Then determine where the link points (via "ls -l")[m
+[31m-		#[m
+[31m-		dirName=`/bin/dirname $pathName`[m
+[31m-		link=`/bin/ls -l $pathName | sed -e 's,.* -> ,,g'`[m
+[31m-[m
+[31m-		if IsRelativePath "$link" ; then[m
+[31m-			pathName="$dirName"/"$link"[m
+[31m-		else[m
+[31m-			pathName="$link"[m
+[31m-		fi[m
+[31m-	done[m
+[31m-[m
+[31m-	echo "$pathName"[m
+[31m-[m
+[31m-	return 0[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Is this a relative path name (i.e., doesn't begin with "/")?[m
+[31m-#[m
+[31m-IsRelativePath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-[m
+[31m-	if [ `echo "$pathName" | sed -e 's,^/.*,absolute,g'` = "absolute" ] ; then[m
+[31m-		return 1[m
+[31m-	else[m
+[31m-		return 0[m
+[31m-	fi[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Figure out the real path to this shell script and then setup[m
+[31m-# the JMFHOME environment[m
+[31m-#[m
+[31m-PROGPATH=`GetRealPath $0`[m
+[31m-TMPDIR=`dirname $PROGPATH`[m
+[31m-JMFHOME=`( cd $TMPDIR/.. && /bin/pwd )`; export JMFHOME[m
+[31m-[m
+[31m-CLASSPATH=${JMFHOME}/lib/jmf.jar:${JMFHOME}/lib/sound.jar:${CLASSPATH}; export CLASSPATH[m
+[31m-[m
+[31m-LD_LIBRARY_PATH=.:/usr/openwin/lib:${JMFHOME}/lib:${LD_LIBRARY_PATH}; export LD_LIBRARY_PATH[m
+[31m-[m
+[31m-# Use this to run with native threads:[m
+[31m-# THREADS_FLAG=native; export THREADS_FLAG[m
+[31m-[m
+[31m-# If it's running on Solaris 2.6, we are forced to use native threads.[m
+[31m-UNAME=`uname -r`[m
+[31m-case $UNAME in[m
+[31m-5.6) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.6.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-esac[m
+[31m-[m
+[31m-if [ $# -gt 0 ]; then[m
+[31m-	FILE=$1[m
+[31m-fi[m
+[31m-exec java JMFInit $*[m
+[1mdiff --git a/JMF-2.1.1e/bin/jmfregistry b/JMF-2.1.1e/bin/jmfregistry[m
+[1mdeleted file mode 100644[m
+[1mindex d177c10..0000000[m
+[1m--- a/JMF-2.1.1e/bin/jmfregistry[m
+[1m+++ /dev/null[m
+[36m@@ -1,88 +0,0 @@[m
+[31m-#!/bin/sh[m
+[31m-#[m
+[31m-# A script to launch the JMFRegistry java application.[m
+[31m-[m
+[31m-#[m
+[31m-# If a path name is a symbolic link, resolve it.[m
+[31m-#[m
+[31m-GetRealPath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-	level=1[m
+[31m-[m
+[31m-	while [ -h "$pathName" ] ; do[m
+[31m-		level=`/bin/expr $level + 1`[m
+[31m-		if [ $level -gt 10 ] ; then[m
+[31m-			echo "$pathName: too many levels of symbolic links"[m
+[31m-			break;[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# First, make sure we have an absolute path name.[m
+[31m-		#[m
+[31m-		if IsRelativePath "$pathName" ; then[m
+[31m-			pathName=`/bin/pwd`/"$pathName"[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# Then determine where the link points (via "ls -l")[m
+[31m-		#[m
+[31m-		dirName=`/bin/dirname $pathName`[m
+[31m-		link=`/bin/ls -l $pathName | sed -e 's,.* -> ,,g'`[m
+[31m-[m
+[31m-		if IsRelativePath "$link" ; then[m
+[31m-			pathName="$dirName"/"$link"[m
+[31m-		else[m
+[31m-			pathName="$link"[m
+[31m-		fi[m
+[31m-	done[m
+[31m-[m
+[31m-	echo "$pathName"[m
+[31m-[m
+[31m-	return 0[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Is this a relative path name (i.e., doesn't begin with "/")?[m
+[31m-#[m
+[31m-IsRelativePath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-[m
+[31m-	if [ `echo "$pathName" | sed -e 's,^/.*,absolute,g'` = "absolute" ] ; then[m
+[31m-		return 1[m
+[31m-	else[m
+[31m-		return 0[m
+[31m-	fi[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Figure out the real path to this shell script and then setup[m
+[31m-# the JMFHOME environment[m
+[31m-#[m
+[31m-PROGPATH=`GetRealPath $0`[m
+[31m-TMPDIR=`dirname $PROGPATH`[m
+[31m-JMFHOME=`( cd $TMPDIR/.. && /bin/pwd )`; export JMFHOME[m
+[31m-[m
+[31m-CLASSPATH=${JMFHOME}/lib/jmf.jar:${JMFHOME}/lib:${JMFHOME}/lib/sound.jar:${CLASSPATH}; export CLASSPATH[m
+[31m-[m
+[31m-LD_LIBRARY_PATH=.:/usr/openwin/lib:${JMFHOME}/lib:${LD_LIBRARY_PATH}; export LD_LIBRARY_PATH[m
+[31m-[m
+[31m-# Use this to run with native threads:[m
+[31m-# THREADS_FLAG=native; export THREADS_FLAG[m
+[31m-[m
+[31m-# If it's running on Solaris 2.6, we are forced to use native threads.[m
+[31m-UNAME=`uname -r`[m
+[31m-case $UNAME in[m
+[31m-5.6) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.6.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-esac[m
+[31m-[m
+[31m-if [ $# -gt 0 ]; then[m
+[31m-	FILE=$1	[m
+[31m-fi[m
+[31m-exec java JMFRegistry[m
+[1mdiff --git a/JMF-2.1.1e/bin/jmstudio b/JMF-2.1.1e/bin/jmstudio[m
+[1mdeleted file mode 100644[m
+[1mindex 72fcef6..0000000[m
+[1m--- a/JMF-2.1.1e/bin/jmstudio[m
+[1m+++ /dev/null[m
+[36m@@ -1,88 +0,0 @@[m
+[31m-#!/bin/sh[m
+[31m-#[m
+[31m-# A script to launch the JMStudio java application.[m
+[31m-[m
+[31m-#[m
+[31m-# If a path name is a symbolic link, resolve it.[m
+[31m-#[m
+[31m-GetRealPath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-	level=1[m
+[31m-[m
+[31m-	while [ -h "$pathName" ] ; do[m
+[31m-		level=`/bin/expr $level + 1`[m
+[31m-		if [ $level -gt 10 ] ; then[m
+[31m-			echo "$pathName: too many levels of symbolic links"[m
+[31m-			break;[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# First, make sure we have an absolute path name.[m
+[31m-		#[m
+[31m-		if IsRelativePath "$pathName" ; then[m
+[31m-			pathName=`/bin/pwd`/"$pathName"[m
+[31m-		fi[m
+[31m-[m
+[31m-		#[m
+[31m-		# Then determine where the link points (via "ls -l")[m
+[31m-		#[m
+[31m-		dirName=`/bin/dirname $pathName`[m
+[31m-		link=`/bin/ls -l $pathName | sed -e 's,.* -> ,,g'`[m
+[31m-[m
+[31m-		if IsRelativePath "$link" ; then[m
+[31m-			pathName="$dirName"/"$link"[m
+[31m-		else[m
+[31m-			pathName="$link"[m
+[31m-		fi[m
+[31m-	done[m
+[31m-[m
+[31m-	echo "$pathName"[m
+[31m-[m
+[31m-	return 0[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Is this a relative path name (i.e., doesn't begin with "/")?[m
+[31m-#[m
+[31m-IsRelativePath()[m
+[31m-{[m
+[31m-	pathName="$1"[m
+[31m-[m
+[31m-	if [ `echo "$pathName" | sed -e 's,^/.*,absolute,g'` = "absolute" ] ; then[m
+[31m-		return 1[m
+[31m-	else[m
+[31m-		return 0[m
+[31m-	fi[m
+[31m-}[m
+[31m-[m
+[31m-#[m
+[31m-# Figure out the real path to this shell script and then setup[m
+[31m-# the JMFHOME environment[m
+[31m-#[m
+[31m-PROGPATH=`GetRealPath $0`[m
+[31m-TMPDIR=`dirname $PROGPATH`[m
+[31m-JMFHOME=`( cd $TMPDIR/.. && /bin/pwd )`; export JMFHOME[m
+[31m-[m
+[31m-CLASSPATH=${JMFHOME}/lib/jmf.jar:${JMFHOME}/lib:${JMFHOME}/lib/sound.jar:${CLASSPATH}; export CLASSPATH[m
+[31m-[m
+[31m-LD_LIBRARY_PATH=.:/usr/openwin/lib:${JMFHOME}/lib:${LD_LIBRARY_PATH}; export LD_LIBRARY_PATH[m
+[31m-[m
+[31m-# Use this to run with native threads:[m
+[31m-# THREADS_FLAG=native; export THREADS_FLAG[m
+[31m-[m
+[31m-# If it's running on Solaris 2.6, we are forced to use native threads.[m
+[31m-UNAME=`uname -r`[m
+[31m-case $UNAME in[m
+[31m-5.6) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.6.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.7.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-5.8.*) THREADS_FLAG=native; export THREADS_FLAG;;[m
+[31m-esac[m
+[31m-[m
+[31m-if [ $# -gt 0 ]; then[m
+[31m-	FILE=$1	[m
+[31m-fi[m
+[31m-exec java JMStudio $*[m
+[1mdiff --git a/JMF-2.1.1e/doc/attributions.html b/JMF-2.1.1e/doc/attributions.html[m
+[1mdeleted file mode 100644[m
+[1mindex dd2c51b..0000000[m
+[1m--- a/JMF-2.1.1e/doc/attributions.html[m
+[1m+++ /dev/null[m
+[36m@@ -1,298 +0,0 @@[m
+[31m-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">[m
+[31m-<HTML>[m
+[31m-<HEAD>[m
+[31m-  <!--#config timefmt="%d-%b-%y" -->[m
+[31m-  <TITLE>JMF - Attributions</TITLE>[m
+[31m-  <META NAME="keywords" CONTENT="JMF, Attributions, Java Media Framework">[m
+[31m-</HEAD>[m
+[31m-[m
+[31m-<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="8B4513" VLINK="8B4513" >[m
+[31m-[m
+[31m-<!-- page headline -->[m
+[31m-<FONT SIZE="+2">[m
+[31m-JMF Attributions[m
+[31m-</FONT>[m
+[31m-<BR>[m
+[31m-[m
+[31m-<!-- end page headline -->[m
+[31m-[m
+[31m-<!-- optional subnav links -->[m
+[31m-<!-- end optional subnav links -->[m
+[31m-[m
+[31m-<!-- main page content -->[m
+[31m-[m
+[31m-<p>[m
+[31m-The Java<SUP><FONT SIZE="-2">TM</FONT></SUP> Media Framework[m
+[31m-reference implementation was developed by by Sun Microsystems, Inc.[m
+[31m-It is based in part on software written by external individuals and[m
+[31m-organizations, who are listed below along with the copyrights and[m
+[31m-conditions by which their technology is allowed to be used in JMF.[m
+[31m-</p>[m
+[31m-[m
+[31m-<!--------------------------------------------------------------->[m
+[31m-<hr>[m
+[31m-[m
+[31m-<b>[m
+[31m-<p>[m
+[31m-Java Versions of: GSM Decoder, GSM Encoder, MPEG-1 Video Decoder, [m
+[31m-ADPCM Encoder, ADPCM Decoder, A-law Decoder and H.263 Decoder[m
+[31m-[m
+[31m-<p>[m
+[31m-Native Versions of: MPEG-1 Parser, H.263 Encoder, GSM Encoder[m
+[31m-</b>[m
+[31m-[m
+[31m-<p>[m
+[31m-Copyright &copy; IBM Corporation 1997-1999 All Rights Reserved[m
+[31m-[m
+[31m-<p><FONT SIZE=-1>[m
+[31m-Licensed Materials - Property of IBM<br>[m
+[31m-"Restricted Materials of IBM" 5748-B81<br>[m
+[31m-US Government Users Restricted Rights - Use, duplication or[m
+[31m-disclosure restricted by GSA ADP Schedule Contract with IBM[m
+[31m-Corporation.</font>[m
+[31m-</p>[m
+[31m-[m
+[31m-<!--------------------------------------------------------------->[m
+[31m-<hr>[m
+[31m-[m
+[31m-<p>[m
+[31m-<b>[m
+[31m-GSM 06.10</b>[m
+[31m-[m
+[31m-<p>[m
+[31m-Copyright &copy; 1992, 1993, 1994 by Jutta Degener and Carsten Bormann,[m
+[31m-Technische Universitaet Berlin[m
+[31m-[m
+[31m-<P><FONT SIZE=-1>Any use of this software is permitted provided that this[m
+[31m-notice is not removed and that neither the authors nor the Technische Universitaet[m
+[31m-Berlin are deemed to have made any representations as to the suitability[m
+[31m-of this software for any purpose nor are held responsible for any defects[m
+[31m-of this software.&nbsp; THERE IS ABSOLUTELY NO WARRANTY FOR THIS SOFTWARE.</FONT>[m
+[31m-[m
+[31m-<P><FONT SIZE=-1>As a matter of courtesy, the authors request to be informed[m
+[31m-about uses this software has found, about bugs in this software, and about[m
+[31m-any improvements that may be of general interest.</FONT>[m
+[31m-</p>[m
+[31m-[m
+[31m-<!--------------------------------------------------------------->[m
+[31m-<hr>[m
+[31m-[m
+[31m-<p>[m
+[31m-<b>[m
+[31m-DVI ADPCM</b>[m
+[31m-[m
+[31m-<p>[m
+[31m-Copyright &copy; 1992 by Stichting Mathematisch Centrum, Amsterdam, The[m
+[31m-Netherlands. All rights reserved.[m
+[31m-[m
+[31m-<P><FONT SIZE=-1>Permission to use, copy, modify, and distribute this software[m
+[31m-and its documentation for any purpose and without fee is hereby granted,[m
+[31m-provided that the above copyright notice appear in all copies and that[m
+[31m-both that copyright notice and this permission notice appear in supporting[m
+[31m-documentation, and that the names of Stichting Mathematisch Centrum or[m
+[31m-CWI not be used in advertising or publicity pertaining to distribution[m
+[31m-of the software without specific, written prior permission.</FONT>[m
+[31m-[m
+[31m-<P><FONT SIZE=-1>STICHTING MATHEMATISCH CENTRUM DISCLAIMS ALL WARRANTIES[m
+[31m-WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY[m
+[31m-AND FITNESS, IN NO EVENT SHALL STICHTING MATHEMATISCH CENTRUM BE LIABLE[m
+[31m-FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER[m
+[31m-RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,[m
+[31m-NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH[m
+[31m-THE USE OR PERFORMANCE OF THIS SOFTWARE.</FONT>[m
+[31m-</p>[m
+[31m-[m
+[31m-<!--------------------------------------------------------------->[m
+[31m-<hr>[m
+[31m-[m
+[31m-<p>[m
+[31m-<b>[m
+[31m-H.261, Motion JPEG</b>[m
+[31m-[m
+[31m-<p>[m
+[31m-This product includes software developed by the University of California,[m
+[31m-Berkeley and the Network Research Group at Lawrence Berkeley Laboratory.[m
+[31m-[m
+[31m-<P>Copyright &copy; 1993-1994 The Regents of the University of California.[m
+[31m-All rights reserved.[m
+[31m-[m
+[31m-<P><FONT SIZE=-1>[m
+[31m-Redistribution and use in source and binary forms, with[m
+[31m-or without modification, are permitted provided that the following [m
+[31m-conditions are met:[m
+[31m-[m
+[31m-<ol>[m
+[31m-<!-- 1 -->[m
+[31m-<li> [m
+[31m-Redistributions of source code must retain the above[m
+[31m-copyright notice, this list of conditions and the following disclaimer.[m
+[31m-[m
+[31m-<!-- 2 -->[m
+[31m-<li> [m
+[31m-Redistributions in binary form must reproduce the[m
+[31m-above copyright notice, this list of conditions and the following disclaimer[m
+[31m-in the documentation and/or other materials provided with the distribution.[m
+[31m-[m
+[31m-<!-- 3 -->[m
+[31m-<li> [m
+[31m-All advertising materials mentioning features or use[m
+[31m-of this software must display the following acknowledgement: This product[m
+[31m-includes software developed by the University of California, Berkeley and[m
+[31m-the Network Research Group at Lawrence Berkeley Laboratory.[m
+[31m-[m
+[31m-<!-- 4 -->[m
+[31m-<li> [m
+[31m-Neither the name of the University nor of the Laboratory[m
+[31m-may be used to endorse or promote products derived from this software without[m
+[31m-specific prior written permission.[m
+[31m-</ol>[m
+[31m-[m
+[31m-<P>[m
+[31m-THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS[m
+[31m-``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED[m
+[31m-TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR[m
+[31m-PURPOSE ARE DISCLAIMED.&nbsp; IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS[m
+[31m-BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR[m
+[31m-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE[m
+[31m-GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)[m
+[31m-HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT[m
+[31m-LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY[m
+[31m-OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF[m
+[31m-SUCH DAMAGE.[m
+[31m-</p>[m
+[31m-</font>[m
+[31m-[m
+[31m-<!--------------------------------------------------------------->[m
+[31m-<hr>[m
+[31m-[m
+[31m-<p>[m
+[31m-<b>[m
+[31m-JPEG</b>[m
+[31m-[m
+[31m-<p>[m
+[31m-This software is based in part on the work of the [m
+[31m-<a href="http://www.ijg.org">Independent JPEG Group</a>.[m
+[31m-The following is an exerpt from the README file which comes with their [m
+[31m-software:[m
+[31m-</p>[m
+[31m-[m
+[31m-<font size="-1">[m
+[31m-[m
+[31m-<b><underline>[m
+[31m-LEGAL ISSUES[m
+[31m-</underline></b>[m
+[31m-[m
+[31m-<p>[m
+[31m-In plain English:[m
+[31m-[m
+[31m-<ol>[m
+[31m-[m
+[31m-<!-- 1. -->[m
+[31m-<li>[m
+[31m-We don't promise that this software works.  [m
+[31m-(But if you find any bugs, please let us know!)[m
+[31m-[m
+[31m-[m
+[31m-<!-- 2. -->[m
+[31m-<li>[m
+[31m-You can use this software for whatever you want.  [m
+[31m-You don't have to pay us.[m
+[31m-[m
+[31m-<!-- 3. -->[m
+[31m-<li>[m
+[31m-You may not pretend that you wrote this software.  If you use it in a[m
+[31m-program, you must acknowledge somewhere in your documentation that[m
+[31m-you've used the IJG code.[m
+[31m-</ol>[m
+[31m-[m
+[31m-<p>[m
+[31m-In legalese:[m
+[31m-[m
+[31m-<p>[m
+[31m-The authors make NO WARRANTY or representation, either express or implied,[m
+[31m-with respect to this software, its quality, accuracy, merchantability, or[m
+[31m-fitness for a particular purpose.  This software is provided "AS IS", and you,[m
+[31m-its user, assume the entire risk as to its quality and accuracy.[m
+[31m-[m
+[31m-<p>[m
+[31m-This software is copyright (C) 1991-1998, Thomas G. Lane.[m
+[31m-All Rights Reserved except as specified below.[m
+[31m-[m
+[31m-<p>[m
+[31m-Permission is hereby granted to use, copy, modify, and distribute this[m
+[31m-software (or portions thereof) for any purpose, without fee, subject to these[m
+[31m-conditions:[m
+[31m-[m
+[31m-<ol>[m
+[31m-<!-- (1) -->[m
+[31m-<li>[m
+[31m-If any part of the source code for this software is distributed, then this[m
+[31m-README file must be included, with this copyright and no-warranty notice[m
+[31m-unaltered; and any additions, deletions, or changes to the original files[m
+[31m-must be clearly indicated in accompanying documentation.[m
+[31m-[m
+[31m-<!-- (2) -->[m
+[31m-<li>[m
+[31m-If only executable code is distributed, then the accompanying[m
+[31m-documentation must state that "this software is based in part on the work of[m
+[31m-the Independent JPEG Group".[m
+[31m-[m
+[31m-<!-- (3) -->[m
+[31m-<li>[m
+[31m-Permission for use of this software is granted only if the user accepts[m
+[31m-full responsibility for any undesirable consequences; the authors accept[m
+[31m-NO LIABILITY for damages of any kind.[m
+[31m-</ol>[m
+[31m-[m
+[31m-<p>[m
+[31m-These conditions apply to any software derived from or based on the IJG code,[m
+[31m-not just to the unmodified library.  If you use our work, you ought to[m
+[31m-acknowledge us.[m
+[31m-[m
+[31m-<p>[m
+[31m-Permission is NOT granted for the use of any IJG author's name or company name[m
+[31m-in advertising or publicity relating to this software or products derived from[m
+[31m-it.  This software may be referred to only as "the Independent JPEG Group's[m
+[31m-software".[m
+[31m-[m
+[31m-<p>[m
+[31m-We specifically permit and encourage the use of this software as the basis of[m
+[31m-commercial products, provided that all warranty or liability claims are[m
+[31m-assumed by the product vendor.[m
+[31m-</p>[m
+[31m-</font>[m
+[31m-[m
+[31m-<!--------------------------------------------------------------->[m
+[31m-<hr>[m
+[31m-[m
+[31m-<p>[m
+[31m-<b>[m
+[31m-VIVO, H.263</b>[m
+[31m-[m
+[31m-<p>[m
+[31m-Vivo is a product of the Vivo Software, Inc. at Waltham, MA 02154.8414.[m
+[31m-<p>[m
+[31m-Copyright &copy; 1995 Vivo Software, Inc. All rights reserved.[m
+[31m-</p>[m
+[31m-[m
+[31m-<!--------------------------------------------------------------->[m
+[31m-<hr>[m
+[31m-[m
+[31m-<h2>Trademarks</h2>[m
+[31m-[m
+[31m-<P>Java<SUP><FONT SIZE=-2>TM</FONT></SUP> is a trademark of Sun Microsystems,[m
+[31m-Inc.[m
+[31m-<BR>QuickTime<SUP><FONT SIZE=-2>TM</FONT></SUP> is a trademark of Apple[m
+[31m-Computer, Inc.[m
+[31m-<BR>AVI<SUP><FONT SIZE=-2>TM</FONT></SUP> is a trademark of Microsoft Corporation.[m
+[31m-<BR>Vivo<SUP><FONT SIZE=-2>TM</FONT></SUP> is a trademark of Vivo Software,[m
+[31m-Inc.[m
+[31m-<!--Blank Space-->[m
+[31m-</P>[m
+[31m-[m
+[31m-[m
+[31m-<!-- end main page content -->[m
+[31m-[m
+[31m-</BODY>[m
+[31m-</HTML>[m
+[31m-[m
+[1mdiff --git a/JMF-2.1.1e/doc/formats.html b/JMF-2.1.1e/doc/formats.html[m
+[1mdeleted file mode 100644[m
+[1mindex d0c6e9c..0000000[m
+[1m--- a/JMF-2.1.1e/doc/formats.html[m
+[1m+++ /dev/null[m
+[36m@@ -1,782 +0,0 @@[m
+[31m-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">[m
+[31m-<HTML>[m
+[31m-<HEAD>[m
+[31m-  <!--#config timefmt="%d-%b-%y" -->[m
+[31m-  <TITLE>JMF 2.1.1 - Supported Formats</TITLE>[m
+[31m-  <META NAME="keywords" CONTENT="JMF, formats, Java Media Framework">[m
+[31m-</HEAD>[m
+[31m-[m
+[31m-<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="8B4513" VLINK="8B4513" >[m
+[31m-[m
+[31m-<!-- page headline -->[m
+[31m-<A NAME="JMFFormats"></A>[m
+[31m-<FONT SIZE="+2">[m
+[31m-Supported Media Formats and Capture Devices[m
+[31m-</FONT>[m
+[31m-<BR>[m
+[31m-[m
+[31m-<!-- end page headline -->[m
+[31m-[m
+[31m-<!-- optional subnav links -->[m
+[31m-<!-- end optional subnav links -->[m
+[31m-[m
+[31m-<!-- main page content -->[m
+[31m-<p>[m
+[31m-This page lists the  <a href="#Formats">media formats</a> supported[m
+[31m-in the JMF 2.1.1 FCS implementation, the [m
+[31m-<a href="#RTPFormats">RTP formats</a> this implementation can [m
+[31m-receive and transmit, and the [m
+[31m-<a href="#Capturers">capture devices</a> that it supports.[m
+[31m-[m
+[31m-<p>[m
+[31m-<A NAME="Formats"></A>[m
+[31m-<TABLE BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#CC9966" NOSAVE >[m
+[31m-<TR>[m
+[31m-<TD><FONT SIZE=+2>Supported Media Formats</FONT></TD>[m
+[31m-</TR>[m
+[31m-</TABLE>[m
+[31m-[m
+[31m-[m
+[31m-<p>[m
+[31m-JMF supports audio sample rates from 8KHz to 48KHz. Note that[m
+[31m-cross-platform version of JMF only supports the following[m
+[31m-rates: 8, 11.025, 11.127, 16, 22.05, 22.254, 32, 44.1, and 48 KHz.[m
+[31m-[m
+[31m-<p>[m
+[31m-The JMF 2.1.1 Reference Implementation supports the media types and[m
+[31m-formats listed in the  table below. In this table:[m
+[31m-[m
+[31m-<ul>[m
+[31m-<LI>[m
+[31m-<b>D</b> indicates the format can be decoded and presented.</LI>[m
+[31m-<LI>[m
+[31m-<b>E</b> indicates the media stream can be encoded in the format.</LI>[m
+[31m-<LI>[m
+[31m-<b>read</b> indicates the media type can be used as input (read from a file)</LI>[m
+[31m-<LI>[m
+[31m-<b>write</b> indicates the media type can be generated as output (written to a file)</LI>[m
+[31m-</ul>[m
+[31m-[m
+[31m-<p>[m
+[31m-[m
+[31m-<TABLE BORDER=1>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>Media Type</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Cross Platform Version</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Solaris/Linux Performance Pack</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Windows Performance Pack</FONT></B></TD>[m
+[31m-[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>AIFF (.aiff)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>8-bit mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>16-bit mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>G.711 (U-law)&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>A-law&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>IMA4 ADPCM</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>AVI (.avi)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: 8-bit mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: 16-bit mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: DVI ADPCM compressed&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: G.711 (U-law)&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: A-law&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: GSM mono</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: ACM**</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: Cinepak&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: MJPEG (422)</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E&nbsp;</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: RGB</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E&nbsp;</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: YUV</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E&nbsp;</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: VCM**</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>GSM (.gsm)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>GSM mono audio</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>HotMedia (.mvr)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>IBM HotMedia</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>MIDI (.mid)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Type 1 & 2 MIDI</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>MPEG-1 Video (.mpg)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>-</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Multiplexed System stream&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video-only stream&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>MPEG Layer II Audio (.mp2)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read only</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>MPEG layer 1, 2 audio&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>QuickTime (.mov)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: 8 bits mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: 16 bits mono/stereo linear</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: G.711 (U-law)&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: A-law&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: GSM mono&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: IMA4 ADPCM&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: Cinepak&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: H.261</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: H.263&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: JPEG (420, 422, 444)&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: RGB</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>Sun Audio (.au)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>8 bits mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>16 bits mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>G.711 (U-law)</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>A-law&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD><B>Wave (.wav)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>read/write</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>8-bit mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>16-bit mono/stereo linear&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>G.711 (U-law)</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>A-law&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>GSM mono&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>DVI ADPCM</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-<TD ALIGN=CENTER>D,E&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>MS ADPCM</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-<TD ALIGN=CENTER>D&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>D</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>ACM**</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>D,E</TD>[m
+[31m-</TR>[m
+[31m-</TABLE>[m
+[31m-[m
+[31m-<P>Notes:[m
+[31m-[m
+[31m-<UL>[m
+[31m-[m
+[31m-<LI>[m
+[31m-ACM** - Window's Audio Compression Manager[m
+[31m-support. Tested for these formats: A-law, GSM610, MSNAudio, MSADPCM, Truespeech,[m
+[31m-mp3, PCM, Voxware AC8, Voxware AC10.</LI>[m
+[31m-[m
+[31m-<LI>[m
+[31m-VCM** - Window's Video Compression Manager[m
+[31m-support.&nbsp; Tested for these formats: IV41, IV51, VGPX, WINX, YV12,[m
+[31m-I263, CRAM, MPG4.</LI>[m
+[31m-</UL>[m
+[31m-[m
+[31m-<p>[m
+[31m-<A NAME="RTPFormats"></A>[m
+[31m-<TABLE BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#CC9966" NOSAVE >[m
+[31m-<TR>[m
+[31m-<TD><FONT SIZE=+2>RTP Formats</FONT></TD>[m
+[31m-</TR>[m
+[31m-</TABLE>[m
+[31m-[m
+[31m-<p>[m
+[31m-The JMF 2.1.1 Reference Implementation can receive and transmit the[m
+[31m-following RTP formats:[m
+[31m-[m
+[31m-<ul>[m
+[31m-<LI>[m
+[31m-<b>R</b> indicates that the format can be decoded and presented.</LI>[m
+[31m-<LI>[m
+[31m-<b>T</b> indicates that media streams can be encoded and transmitted in the format.</LI>[m
+[31m-</ul>[m
+[31m-[m
+[31m-<p>[m
+[31m-<TABLE BORDER >[m
+[31m-[m
+[31m-<TD ALIGN=CENTER><B><FONT SIZE=+1>Media Type</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>RTP</FONT><br>[m
+[31m-<FONT SIZE=-1>Payload</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Cross Platform Version</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Solaris/Linux Performance Pack</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Windows Performance Pack</FONT></B></TD>[m
+[31m-[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: G.711 (U-law) 8 kHz&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>0</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: GSM mono&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>3</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: G.723 mono</TD>[m
+[31m-<TD ALIGN=CENTER>4</TD>[m
+[31m-<TD ALIGN=CENTER>R</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: 4-bit mono DVI 8 kHz&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>5</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: 4-bit mono DVI 11.025 kHz&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>16</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: 4-bit mono DVI 22.05 kHz&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>17</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Audio: MPEG Layer I, II&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>14</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<!-- REMOVE UNTIL JMF 2.1 FCS - NEED LEGAL PERMISSION TO USE[m
+[31m-<TR>[m
+[31m-<TD>Audio: G.728 mono</TD>[m
+[31m-<TD ALIGN=CENTER>15</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m---->[m
+[31m-[m
+[31m-<!-- REMOVE UNTIL JMF 2.X FCS - NEED LEGAL PERMISSION TO USE[m
+[31m-<TR>[m
+[31m-<TD>Audio: G.729 mono</TD>[m
+[31m-<TD ALIGN=CENTER>18</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m---->[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: JPEG (420, 422, 444)*&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>26</TD>[m
+[31m-<TD ALIGN=CENTER>R</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: H.261&nbsp;</TD>[m
+[31m-<TD ALIGN=CENTER>31</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>R</TD>[m
+[31m-<TD ALIGN=CENTER>R</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: H.263**</TD>[m
+[31m-<TD ALIGN=CENTER>34</TD>[m
+[31m-<TD ALIGN=CENTER>Mode A Only</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Video: MPEG-I***</TD>[m
+[31m-<TD ALIGN=CENTER>32</TD>[m
+[31m-<TD ALIGN=CENTER>T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-<TD ALIGN=CENTER>R,T</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-</table>[m
+[31m-[m
+[31m-<P>* JPEG/RTP can only be transmitted in video dimensions[m
+[31m-that are in multiple of 8 pixels.&nbsp;[m
+[31m-</p>[m
+[31m-[m
+[31m-<P>** H.263/RTP can only be transmitted in 3 different video dimensions:[m
+[31m-SQCIF (128x96), QCIF (176x144) and CIF (352x288).&nbsp;[m
+[31m-</p>[m
+[31m-[m
+[31m-<P>*** MPEG/RTP video can only be transmitted from pre-encoded MPEG[m
+[31m-content, i.e. from an MPEG-encoded file or MPEG enabled capture source.[m
+[31m-Real-time software MPEG encoding is not feasible for RTP transmission.&nbsp;[m
+[31m-</p>[m
+[31m-[m
+[31m-<p>[m
+[31m-<A NAME="Capturers"></A>[m
+[31m-<TABLE BORDER=0 COLS=1 WIDTH="100%" BGCOLOR="#CC9966" NOSAVE >[m
+[31m-<TR>[m
+[31m-<TD><FONT SIZE=+2>Capture Devices</FONT></TD>[m
+[31m-</TR>[m
+[31m-</TABLE>[m
+[31m-<p>[m
+[31m-<p>[m
+[31m-The JMF 2.1.1 Reference Implementation supports SunVideo /[m
+[31m-SunVideoPlus capture devices on Solaris. On Windows, most capture[m
+[31m-devices that have VFW drivers are supported. On Linux, devices that[m
+[31m-have a Video4Linux driver are expected to work, but not extensively[m
+[31m- tested. The table below lists[m
+[31m-the capture devices known to work with this release.[m
+[31m-[m
+[31m-<p>[m
+[31m-<TABLE BORDER >[m
+[31m-<TR>[m
+[31m-<TD ALIGN=CENTER><B><FONT SIZE=+1>Capturer</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Cross Platform Version</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Solaris Performance Pack</FONT></B></TD>[m
+[31m-[m
+[31m-<TH ALIGN=CENTER><B><FONT SIZE=+1>JMF 2.1.1</FONT><br>[m
+[31m-<FONT SIZE=-1>Windows Performance Pack</FONT></B></TD>[m
+[31m-[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>JavaSound (16-bit, 44100, 22050, 11025Hz, 8000Hz linear)</TD>[m
+[31m-<TD ALIGN=CENTER><B>X (J2SE 1.3+)</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>X</B></TD>[m
+[31m-<TD ALIGN=CENTER><B>X</B></TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>SunVideo</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>X</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>SunVideoPlus</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>X</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>VFW</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>X</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Intel Create &amp; Share</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>Win9x</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Diamond Supra Video Kit; Share</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>Win98</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>QuickCam VC (camera)</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>WinNT</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>e-cam (camera)</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>WinNT, 9X</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Winnow Videum</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>WinNT, 9X</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Creative Web Cam II</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>Win9X</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Miro Video DC30</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>Win9X</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Iomega Buz</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>Win9X</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>QuickCam Home USB (Camera)</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>Win98</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-<TR>[m
+[31m-<TD>Smart Video Recorder III</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>-</TD>[m
+[31m-<TD ALIGN=CENTER>Win9X</TD>[m
+[31m-</TR>[m
+[31m-[m
+[31m-</TABLE>[m
+[31m-[m
+[31m-<!-- end main page content -->[m
+[31m-[m
+[31m-</BODY>[m
+[31m-</HTML>[m
+[1mdiff --git a/JMF-2.1.1e/doc/readme.html b/JMF-2.1.1e/doc/readme.html[m
+[1mdeleted file mode 100644[m
+[1mindex c8adec2..0000000[m
+[1m--- a/JMF-2.1.1e/doc/readme.html[m
+[1m+++ /dev/null[m
+[36m@@ -1,513 +0,0 @@[m
+[31m-<HTML>[m
+[31m-<HEAD>[m
+[31m-   <TITLE>JMF 2.1.1e README</TITLE>[m
+[31m-</HEAD>[m
+[31m-[m
+[31m-<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#A11430" VLINK="#333366" ALINK="#FF0000">[m
+[31m-[m
+[31m-<center>[m
+[31m-<H1>[m
+[31m-Java<sup><font size="-2">TM</font></sup> Media Framework 2.1.1e API<BR>[m
+[31m-README and BINARY CODE LICENSE[m
+[31m-</H1>[m
+[31m-</center>[m
+[31m-[m
+[31m-<h3>[m
+[31m-Table of Contents[m
+[31m-</h3>[m
+[31m-<ul>[m
+[31m-<li><a href="#intro">Introduction</a>[m
+[31m-<li><a href="#install">Quick Install</a>[m
+[31m-<li><a href="#security">Security Note</a>[m
+[31m-<li><a href="#contents">JMF Install Contents</a>[m
+[31m-<li><a href="#distribution">Distributing JMF with your Java software</a>[m
+[31m-<li><a href="#license">JMF Binary Code License</a>[m
+[31m-</ul>[m
+[31m-[m
+[31m-<!---------------------------------------------------------------------->[m
+[31m-<a name="intro"></a>[m
+[31m-<hr>[m
+[31m-<h3>[m
+[31m-Introduction[m
+[31m-</h3>[m
+[31m-[m
+[31m-<P>The Java<sup><font size="-2">TM</font></sup> Media Framework (JMF)[m
+[31m-is an application programming interface (API) for incorporating media[m
+[31m-data such as audio and video into Java applications and applets. It is[m
+[31m-specifically designed to take advantage of Java platform features.[m
+[31m-[m
+[31m-<P>The JMF 1.0 API (the Java Media Player API) enables programmers to[m
+[31m-develop Java programs for playback of time-based media. The JMF 2.0 API[m
+[31m-extends the framework by providing support for capturing and storing[m
+[31m-media data, controlling the type of processing that is performed during[m
+[31m-playback, and performing custom processing on media data streams.  In[m
+[31m-addition, JMF 2.0 defines a plug-in API that enables advanced[m
+[31m-developers and technology providers to more easily customize and extend[m
+[31m-JMF functionality.[m
+[31m-[m
+[31m-<p>[m
+[31m-The latest implemenation of this API from Sun is JMF 2.1.1e,[m
+[31m-which includes several improvements to RTP/RTSP components[m
+[31m-and numerous bug-fixes.[m
+[31m-[m
+[31m-<p>[m
+[31m-You can download all of the documentation for this [m
+[31m-release, including the setup information and sample code, from:[m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-  <a href="http://java.sun.com/products/java-media/jmf/2.1.1/documentation.html">[m
+[31m-     http://java.sun.com/products/java-media/jmf/2.1.1/documentation.html</a>[m
+[31m-</code>[m
+[31m-</blockquote>[m
+[31m-[m
+[31m-<!---------------------------------------------------------------------->[m
+[31m-<a name="install"></a>[m
+[31m-<hr>[m
+[31m-<h3>[m
+[31m-Quick Install</h3>[m
+[31m-[m
+[31m-<p>[m
+[31m-Here are some quick instructions for installing JMF 2.1.1e.[m
+[31m-Complete instructions for setting up and running JMF are[m
+[31m-available from the JMF web site at: [m
+[31m-[m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-     <a href="http://java.sun.com/products/java-media/jmf/2.1.1/setup.html">[m
+[31m-     http://java.sun.com/products/java-media/jmf/2.1.1/setup.html</a>[m
+[31m-</code>[m
+[31m-</blockquote>[m
+[31m-[m
+[31m-<h4>[m
+[31m-Installing JMF 2.1.1e or JMF 2.1.1e for Web Servers (i.e. Java versions)[m
+[31m-</h4>[m
+[31m-<p>[m
+[31m-The install package for Java clients is a zip file. Use a zip utility[m
+[31m-to extract the files and then set your class path to reference the JMF[m
+[31m-directory.  For example:[m
+[31m-[m
+[31m-<blockquote>[m
+[31m-<p>[m
+[31m-     On Solaris and Linux: [m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-          setenv JMFHOME /home/someuser/JMF2.1.1 <br>[m
+[31m-          setenv CLASSPATH $JMFHOME/lib/jmf.jar:.:${CLASSPATH}:[m
+[31m-</blockquote>[m
+[31m-</code>     [m
+[31m-<p>[m
+[31m-On AIX: [m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-          setenv JMFHOME /usr/JMF2.1.1 <br>[m
+[31m-          setenv CLASSPATH $JMFHOME/lib/jmf.jar:.:${CLASSPATH}:[m
+[31m-</blockquote>[m
+[31m-</code>[m
+[31m-<p>[m
+[31m-     On Windows: [m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-          set JMFHOME=C:\JMF2.1.1 <br>[m
+[31m-          set CLASSPATH=%JMFHOME%\lib\jmf.jar;.;%CLASSPATH%[m
+[31m-</blockquote>[m
+[31m-</code>[m
+[31m-</blockquote>[m
+[31m-[m
+[31m-<h4>[m
+[31m-Installing JMF 2.1.1 with Solaris or Linux Performance Pack[m
+[31m-</h4>[m
+[31m-<p>[m
+[31m-The Solaris and Linux install packages contain an exectuable installation[m
+[31m-program. Run the installation program to extract JMF and then set your[m
+[31m-class path to reference the JMF directory. For example:[m
+[31m-[m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-     setenv JMFHOME /home/someuser/JMF2.1.1 <br>[m
+[31m-     setenv CLASSPATH $JMFHOME/lib/jmf.jar:$JMFHOME/lib/sound.jar:.:${CLASSPATH}[m
+[31m-</code>[m
+[31m-</blockquote>[m
+[31m-<p>[m
+[31m-You'll also need to set your LD_LIBRARY_PATH (shared libraries path) [m
+[31m-to point to the JMF libraries. For example: [m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-     setenv LD_LIBRARY_PATH $JMFHOME/lib:${LD_LIBRARY_PATH}[m
+[31m-</code>[m
+[31m-</blockquote>[m
+[31m-[m
+[31m-<h4>[m
+[31m-Installing JMF 2.1.1 with Windows Performance Pack[m
+[31m-</h4>[m
+[31m-<p>[m
+[31m-The Windows install package package contains an InstallShield[m
+[31m-installation program.  Run the installation program to extract JMF and[m
+[31m-configure your environment variables.During installation, InstallShield[m
+[31m-should automatically set up your CLASSPATH and PATH:[m
+[31m-[m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-     set CLASSPATH=%JMFHOME%\lib\jmf.jar;%JMFHOME%\lib\sound.jar;.;%CLASSPATH%<br>[m
+[31m-<br>[m
+[31m-     set PATH=%WINDIR%\System32;%PATH%    (on Windows NT) <br>[m
+[31m-     set PATH=%WINDIR%\System;%PATH%   (on Windows 95/98) <br>[m
+[31m-</blockquote>[m
+[31m-</code>[m
+[31m-<a name="verify"></a>[m
+[31m-<h3>Verifying your Installation</h3>[m
+[31m-<p>[m
+[31m-To verify that JMF is set up properly on your system, use the JMF Diagnostics [m
+[31m-applet at:[m
+[31m-[m
+[31m-<blockquote>[m
+[31m-<code>[m
+[31m-  <a href="http://java.sun.com/products/java-media/jmf/2.1.1/jmfdiagnostics.html">[m
+[31m-  http://java.sun.com/products/java-media/jmf/2.1.1/jmfdiagnostics.html</a>[m
+[31m-</code>[m
+[31m-</blockquote>[m
+[31m-[m
+[31m-<!---------------------------------------------------------------------->[m
+[31m-<a name="security"></a>[m
+[31m-<hr>[m
+[31m-<h3>[m
+[31m-Security Note</h3>[m
+[31m-[m
+[31m-<p>[m
+[31m-During the installation, you will be asked two security related questions:[m
+[31m-<ul>[m
+[31m-  <li><b>Permit recording from an applet</b>[m
+[31m-    <P>[m
+[31m-    If you agree to this, JMF will allow applets to capture audio and[m
+[31m-    video from the local capture devices. It is possible for a malicious[m
+[31m-    hidden applet on a web page to quietly record sounds or video from your[m
+[31m-    system and transmit the data back to a system on the internet. This is usually[m
+[31m-    a risk only if you visit unfamiliar web sites.<P>[m
+[31m-    You can disable or enable this[m
+[31m-    feature by running the JMFRegistry application (or choose Preferences from the[m
+[31m-    JMStudio File menu), modify the setting in the User Settings tab and commit the[m
+[31m-    changes.<P>[m
+[31m-  <li><b>Permit writing local files from an applet</b>[m
+[31m-    <P>[m
+[31m-    This is a greater security risk since a malicious applet can overwrite files[m
+[31m-    on your hard disk without your knowledge. Enable this feature only if you[m
+[31m-    need it for a specific application and are sure that you will not visit[m
+[31m-    any possibly malicious web sites.<P>[m
+[31m-    You can disable or enable this[m
+[31m-    feature by running the JMFRegistry application (or choose Preferences from the[m
+[31m-    JMStudio File menu), modify the setting in the User Settings tab and commit the[m
+[31m-    changes.<P>[m
+[31m-</ul>[m
+[31m-[m
+[31m-<!---------------------------------------------------------------------->[m
+[31m-<a name="contents"></a>[m
+[31m-<hr>[m
+[31m-<h3>[m
+[31m-JMF Install Contents</h3>[m
+[31m-[m
+[31m-<p>[m
+[31m-This release contains the following directories:[m
+[31m-[m
+[31m-<ul>[m
+[31m-<li><b>bin</b> - contains scripts to launch a few java applications[m
+[31m-<li><b>doc</b> - contains this file[m
+[31m-<li><b>lib</b> - contains the compiled java classes and the compiled native[m
+[31m-libraries for the JMF players[m
+[31m-</ul>[m
+[31m-[m
+[31m-[m
+[31m-<!---------------------------------------------------------------------->[m
+[31m-<a name="distribution"></a>[m
+[31m-<hr>[m
+[31m-<h3>[m
+[31m-Distributing JMF with your Java software</h3>[m
+[31m-[m
+[31m-Sun Microsystems allows vendors to distribute JMF 2.1.1e with their Java[m
+[31m-software, as long as their software uses JMF 2.1.1e and  provided they[m
+[31m-follow the terms of the JMF 2.1.1e Binary Code License agreement.[m
+[31m-[m
+[31m-This document uses the term "vendors" to refer to licensees, [m
+[31m-developers, and independent software vendors (ISVs) who [m
+[31m-license and distribute the JMF with their Java programs.[m
+[31m-[m
+[31m-<h4>[m
+[31m-REQUIRED versus OPTIONAL FILES[m
+[31m-</h4>[m
+[31m-[m
+[31m-<p>[m
+[31m-Vendors must follow the terms of the JMF Binary Code License agreement, [m
+[31m-which includes these terms:[m
+[31m-[m
+[31m-<ul>[m
+[31m-<li>Don't arbitrarily subset the JMF.  You may, however, omit those[m
+[31m-files that have been designated below as "optional" or that are[m
+[31m-removable by using the JMF Customizer Tool provided.[m
+[31m-[m
+[31m-<li>Include in your product's license the provisions called out[m
+[31m-in the JMF Binary Code License.[m
+[31m-[m
+[31m-</ul>[m
+[31m-[m
+[31m-<h4>[m
+[31m-Bundling JMF[m
+[31m-</h4>[m
+[31m-[m
+[31m-<p>[m
+[31m-This Solaris, Linux and Windows version of the JMF comes with its own[m
+[31m-installer that simplifies the installation of JMF. Other versions[m
+[31m-of JMF are bundled in a zip file which needs to be unzipped to[m
+[31m-be installed.[m
+[31m-[m
+[31m-<p>[m
+[31m-Vendors have the option of delivering the Solaris, Linux, Windows, and/or zip[m
+[31m-install binaries with their software, and having the user run them[m
+[31m-separately, or to bundle JMF directly with the install procedures of[m
+[31m-thier software.[m
+[31m-[m
+[31m-<h4>[m
+[31m-Required Files[m
+[31m-</h4>[m
+[31m-[m
+[31m-<p>[m
+[31m-All the files and directories in the <b>lib</b> directory are required[m
+[31m-unless they are listed under <b>Optional Files</b> below or are[m
+[31m-removable using the JMF Customizer Tool. Likewise, this[m
+[31m-<b>readme.html</b> is a required file and must always be included[m
+[31m-with JMF 2.1.1e.[m
+[31m-[m
+[31m-<h4>[m
+[31m-Optional Files[m
+[31m-</h4>[m
+[31m-[m
+[31m-<p>[m
+[31m-The following files are optional:[m
+[31m-[m
+[31m-<ul>[m
+[31m-<li>doc/*[m
+[31m-<li>bin/*[m
+[31m-<li>lib/soundbank.gm[m
+[31m-<li>lib/sound.jar[m
+[31m-<li>lib/jsound.dll or lib/libjsound.so[m
+[31m-</ul>[m
+[31m-[m
+[31m-<!---------------------------------------------------------------------->[m
+[31m-<a name="license"></a>[m
+[31m-<hr>[m
+[31m-[m
+[31m-<!----- Begin AGREEMENT section ----->[m
+[31m-[m
+[31m-<a name="AGREEMENT">[m
+[31m-<center>[m
+[31m-[m
+[31m-<font size ="-1" face="Arial,Helvetica">[m
+[31m-[m
+[31m-<A NAME="AGREEMENT">[m
+[31m-<P ALIGN=CENTER><FONT SIZE=4><B>Java<SUP>TM</SUP> Media Framework[m
+[31m-(JMF) 2.1.x</B><BR><B>Binary Code License Agreement</B></FONT></P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3>READ THE[m
+[31m-TERMS OF THIS AGREEMENT AND ANY PROVIDED SUPPLEMENTAL LICENSE TERMS[m
+[31m-(COLLECTIVELY &quot;AGREEMENT&quot;) CAREFULLY BEFORE OPENING THE[m
+[31m-SOFTWARE MEDIA PACKAGE. BY OPENING THE SOFTWARE MEDIA PACKAGE, YOU[m
+[31m-AGREE TO THE TERMS OF THIS AGREEMENT. IF YOU ARE ACCESSING THE[m
+[31m-SOFTWARE ELECTRONICALLY, INDICATE YOUR ACCEPTANCE OF THESE TERMS BY[m
+[31m-SELECTING THE &quot;ACCEPT&quot; BUTTON AT THE END OF THIS AGREEMENT.[m
+[31m-IF YOU DO NOT AGREE TO ALL OF THE TERMS, PROMPTLY RETURN THE UNUSED[m
+[31m-SOFTWARE TO YOUR PLACE OF PURCHASE FOR A REFUND OR, IF THE SOFTWARE[m
+[31m-IS ACCESSED ELECTRONICALLY, SELECT THE &quot;DECLINE&quot; BUTTON AT[m
+[31m-THE END OF THIS AGREEMENT. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>1. License[m
+[31m-to Use.</B> Sun Microsystems, Inc. (&quot;Sun&quot;) grants you a[m
+[31m-non-exclusive and non-transferable license for the internal use only[m
+[31m-of the accompanying software and documentation and any error[m
+[31m-corrections provided by Sun (collectively &quot;Software&quot;), by[m
+[31m-the number of users and the class of computer hardware for which the[m
+[31m-corresponding fee has been paid. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>2.[m
+[31m-Restrictions. </B>Software is confidential and copyrighted. Title to[m
+[31m-Software and all associated intellectual property rights is retained[m
+[31m-by Sun and/or its licensors. Except as specifically authorized in any[m
+[31m-Supplemental License Terms, you may not make copies of Software,[m
+[31m-other than a single copy of Software for archival purposes. Unless[m
+[31m-enforcement is prohibited by applicable law, you may not modify,[m
+[31m-decompile, or reverse engineer Software. You acknowledge that[m
+[31m-Software is not designed or intended for use in the design,[m
+[31m-construction, operation or maintenance of any nuclear facility. Sun[m
+[31m-disclaims any express or implied warranty of fitness for such uses.[m
+[31m-No right, title or interest in or to any trademark, service mark,[m
+[31m-logo or trade name of Sun or its licensors is granted under this[m
+[31m-Agreement. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>3. Limited[m
+[31m-Warranty.</B> Sun warrants to you that for a period of ninety (90)[m
+[31m-days from the date of purchase, as evidenced by a copy of the[m
+[31m-receipt, the media on which Software is furnished (if any) will be[m
+[31m-free of defects in materials and workmanship under normal use. Except[m
+[31m-for the foregoing, Software is provided &quot;AS IS&quot;. Your[m
+[31m-exclusive remedy and Sun's entire liability under this limited[m
+[31m-warranty will be at Sun's option to replace Software media or refund[m
+[31m-the fee paid for Software. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>4.[m
+[31m-DISCLAIMER OF WARRANTY.</B> UNLESS SPECIFIED IN THIS AGREEMENT, ALL[m
+[31m-EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES,[m
+[31m-INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A[m
+[31m-PARTICULAR PURPOSE OR NON-INFRINGEMENT ARE DISCLAIMED, EXCEPT TO THE[m
+[31m-EXTENT THAT THESE DISCLAIMERS ARE HELD TO BE LEGALLY INVALID. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>5.[m
+[31m-LIMITATION OF LIABILITY.</B> TO THE EXTENT NOT PROHIBITED BY LAW, IN[m
+[31m-NO EVENT WILL SUN OR ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE,[m
+[31m-PROFIT OR DATA, OR FOR SPECIAL, INDIRECT, CONSEQUENTIAL, INCIDENTAL[m
+[31m-OR PUNITIVE DAMAGES, HOWEVER CAUSED REGARDLESS OF THE THEORY OF[m
+[31m-LIABILITY, ARISING OUT OF OR RELATED TO THE USE OF OR INABILITY TO[m
+[31m-USE SOFTWARE, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH[m
+[31m-DAMAGES. In no event will Sun's liability to you, whether in[m
+[31m-contract, tort (including negligence), or otherwise, exceed the[m
+[31m-amount paid by you for Software under this Agreement. The foregoing[m
+[31m-limitations will apply even if the above stated warranty fails of its[m
+[31m-essential purpose. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>6.[m
+[31m-Termination.</B> This Agreement is effective until terminated. You[m
+[31m-may terminate this Agreement at any time by destroying all copies of[m
+[31m-Software. This Agreement will terminate immediately without notice[m
+[31m-from Sun if you fail to comply with any provision of this Agreement.[m
+[31m-Upon Termination, you must destroy all copies of Software. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>7. Export[m
+[31m-Regulations.</B> All Software and technical data delivered under this[m
+[31m-Agreement are subject to US export control laws and may be subject to[m
+[31m-export or import regulations in other countries. You agree to comply[m
+[31m-strictly with all such laws and regulations and acknowledge that you[m
+[31m-have the responsibility to obtain such licenses to export, re-export,[m
+[31m-or import as may be required after delivery to you. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>8. U.S.[m
+[31m-Government Restricted Rights. </B>If Software is being acquired by or[m
+[31m-on behalf of the U.S. Government or by a U.S. Government prime[m
+[31m-contractor or subcontractor (at any tier), then the Government's[m
+[31m-rights in Software and accompanying documentation will be only as set[m
+[31m-forth in this Agreement; this is in accordance with 48 C.F.R.[m
+[31m-227.7202-4 (for Department of Defense (DOD) acquisitions) and with 48[m
+[31m-CFR 2.101 and 12.212 (for non-DOD acquisitions). </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>9.[m
+[31m-Governing Law. </B>Any action related to this Agreement will be[m
+[31m-governed by California law and controlling U.S. federal law. No[m
+[31m-choice of law rules of any jurisdiction will apply. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>10.[m
+[31m-Severability.</B> If any provision of this Agreement is held to be[m
+[31m-unenforceable, this Agreement will remain in effect with the[m
+[31m-provision omitted, unless omission would frustrate the intent of the[m
+[31m-parties, in which case this Agreement will immediately terminate. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=JUSTIFY STYLE="line-height: 100%"><FONT SIZE=3><B>11.[m
+[31m-Integration. </B>This Agreement is the entire agreement between you[m
+[31m-and Sun relating to its subject matter. It supersedes all prior or[m
+[31m-contemporaneous oral or written communications, proposals,[m
+[31m-representations and warranties and prevails over any conflicting or[m
+[31m-additional terms of any quote, order, acknowledgment, or other[m
+[31m-communication between the parties relating to its subject matter[m
+[31m-during the term of this Agreement. No modification of this Agreement[m
+[31m-will be binding, unless in writing and signed by an authorized[m
+[31m-representative of each party. </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=CENTER><FONT SIZE=4><B>Java<SUP>TM</SUP> Media Framework[m
+[31m-(JMF) 2.1.x<BR>Supplemental License Terms</B></FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=3>These supplemental license terms[m
+[31m-(&quot;Supplemental Terms&quot;) add to or modify the terms of the[m
+[31m-Binary Code License Agreement (collectively, the &quot;Agreement&quot;).[m
+[31m-Capitalized terms not defined in these Supplemental Terms shall have[m
+[31m-the same meanings ascribed to them in the Agreement. These[m
+[31m-Supplemental Terms shall supersede any inconsistent or conflicting[m
+[31m-terms in the Agreement, or in any license contained within the[m
+[31m-Software.</FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=3><B>1. Software Internal Use and[m
+[31m-Development License Grant.</B> Subject to the terms and conditions of[m
+[31m-this Agreement, including, but not limited to Section 3 (Java[m
+[31m-Technology Restrictions) of these Supplemental Terms, Sun grants you[m
+[31m-a non-exclusive, non-transferable, limited license to reproduce[m
+[31m-internally and use internally the binary form of the Software,[m
+[31m-complete and unmodified, for the sole purpose of designing,[m
+[31m-developing and testing your Java applets and applications[m
+[31m-(&quot;Programs&quot;).</FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=3><B>2. License to Distribute Software.</B>[m
+[31m-In addition to the license granted in Section 1 (Software Internal[m
+[31m-Use and Development License Grant) of these Supplemental Terms,[m
+[31m-subject to the terms and conditions of this Agreement, including but[m
+[31m-not limited to, Section 3 (Java Technology Restrictions) of these[m
+[31m-Supplemental Terms, Sun grants you a non-exclusive, non-transferable,[m
+[31m-limited license to reproduce and distribute the Software in binary[m
+[31m-code form only, provided that you: (i) distribute the Software[m
+[31m-complete and unmodified, except that you may omit those files[m
+[31m-specifically identified as&quot;optional&quot; in the Software[m
+[31m-&quot;README&quot; file, which include samples, documents, and bin[m
+[31m-files, or that are removable by using the Software customizer tool[m
+[31m-provided, only as part of and for the sole purpose of running your[m
+[31m-Program into which the Software is incorporated; (ii) do not[m
+[31m-distribute additional software intended to replace any components of[m
+[31m-the Software; (iii) do not remove or alter any proprietary legends or[m
+[31m-notices contained in the Software; (iv) only distribute the Software[m
+[31m-subject to a license agreement that protects Sun's interests[m
+[31m-consistent with the terms contained in this Agreement; and (v) agree[m
+[31m-to defend and indemnify Sun and its licensors from and against any[m
+[31m-damages, costs, liabilities, settlement amounts or expenses,[m
+[31m-including attorneys' fees, incurred in connection with any claim,[m
+[31m-lawsuit or action by any third party that arises or results from the[m
+[31m-use or distribution of any and all Programs or Software.</FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=3><B>3. Java<SUP> </SUP>Technology[m
+[31m-Restrictions.</B> You may not modify the Java Platform Interface[m
+[31m-(&quot;JPI&quot;, identified as classes contained within the &quot;java&quot;[m
+[31m-package or any subpackages of the &quot;java&quot; package), by[m
+[31m-creating additional classes within the JPI or otherwise causing the[m
+[31m-addition to or modification of the classes in the JPI. In the event[m
+[31m-that you create an additional class and associated API's, which: (i)[m
+[31m-extends the functionality of the Java platform, and (ii) is exposed[m
+[31m-to third party software developers for the purpose of developing[m
+[31m-additional software which invokes such additional API, you must[m
+[31m-promptly publish broadly an accurate specification for such API for[m
+[31m-free use by all developers. You may not create, or authorize your[m
+[31m-licensees to create additional classes, interfaces, packages or[m
+[31m-subpackages that are in any way identified as &quot;java&quot;,[m
+[31m-&quot;javax&quot;, &quot;sun&quot; or similar convention as specified[m
+[31m-by Sun in any class file naming convention designation.</FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 9pt"><FONT SIZE=3><B>4.[m
+[31m-Java Runtime Availability. </B>Refer to the appropriate version of[m
+[31m-the Java Runtime Environment binary code license (currently located[m
+[31m-at </FONT><A HREF="http://www.java.sun.com/jdk/index.html"><FONT SIZE=3>http://www.java.sun.com/jdk/index.html</FONT></A><FONT SIZE=3>)[m
+[31m-for the availability of runtime code which may be distributed with[m
+[31m-Java applets and applications.</FONT></FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=3><B>5. Trademarks and Logos.</B> You[m
+[31m-acknowledge and agree as between you and Sun that Sun owns the SUN,[m
+[31m-SOLARIS, JAVA, JINI, FORTE, STAROFFICE, STARPORTAL and iPLANET[m
+[31m-trademarks and all SUN, SOLARIS, JAVA, JINI, FORTE, STAROFFICE,[m
+[31m-STARPORTAL and iPLANET-related trademarks, service marks, logos and[m
+[31m-other brand designations (&quot;Sun Marks&quot;), and you agree to[m
+[31m-comply with the Sun Trademark and Logo Usage Requirements currently[m
+[31m-located at http://www.sun.com/policies/trademarks. Any use you make[m
+[31m-of the Sun Marks inures to Sun's benefit.</FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=3><B>6. Source Code</B>. Software may[m
+[31m-contain source code that is provided solely for reference purposes[m
+[31m-pursuant to the terms of this Agreement. Source code may not be[m
+[31m-redistributed unless expressly provided for in this Agreement.</FONT></P>[m
+[31m-<P ALIGN=JUSTIFY><FONT SIZE=3><B>7. Termination for Infringement.</B>[m
+[31m-Either party may terminate this Agreement immediately should any[m
+[31m-Software become, or in either party's opinion be likely to become,[m
+[31m-the subject of a claim of infringement of any intellectual property[m
+[31m-right.</FONT></P>[m
+[31m-<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT SIZE=3><FONT FACE="Thorndale"><FONT COLOR="#000000">For[m
+[31m-inquiries please contact: Sun Microsystems, Inc. 4150 Network Circle,[m
+[31m-Santa Clara, California 95054.</FONT></FONT> </FONT>[m
+[31m-</P>[m
+[31m-<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=1 STYLE="font-size: 8pt"><I><FONT SIZE=2>LFI#[m
+[31m-129621/Form ID#011801</FONT> </I></FONT>[m
+[31m-</P>[m
+[31m-<hr>[m
+[31m-<p>[m
+[31m-<font size="-1">[m
+[31m-This page was last modified on 1-May-2003<br>[m
+[31m-Copyright 1995-2003, Sun Microsystems, Inc.<br>[m
+[31m-All Rights Reserved</font>[m
+[31m-[m
+[1mdiff --git a/JMF-2.1.1e/lib/customizer.jar b/JMF-2.1.1e/lib/customizer.jar[m
+[1mdeleted file mode 100644[m
+[1mindex f5f9847..0000000[m
+Binary files a/JMF-2.1.1e/lib/customizer.jar and /dev/null differ
+[1mdiff --git a/JMF-2.1.1e/lib/jmf.jar b/JMF-2.1.1e/lib/jmf.jar[m
+[1mdeleted file mode 100644[m
+[1mindex d0123a0..0000000[m
+Binary files a/JMF-2.1.1e/lib/jmf.jar and /dev/null differ
+[1mdiff --git a/JMF-2.1.1e/lib/jmf.properties b/JMF-2.1.1e/lib/jmf.properties[m
+[1mdeleted file mode 100644[m
+[1mindex fae318b..0000000[m
+Binary files a/JMF-2.1.1e/lib/jmf.properties and /dev/null differ
+[1mdiff --git a/JMF-2.1.1e/lib/mediaplayer.jar b/JMF-2.1.1e/lib/mediaplayer.jar[m
+[1mdeleted file mode 100644[m
+[1mindex 5b8ad3d..0000000[m
+Binary files a/JMF-2.1.1e/lib/mediaplayer.jar and /dev/null differ
+[1mdiff --git a/JMF-2.1.1e/lib/multiplayer.jar b/JMF-2.1.1e/lib/multiplayer.jar[m
+[1mdeleted file mode 100644[m
+[1mindex d5f4570..0000000[m
+Binary files a/JMF-2.1.1e/lib/multiplayer.jar and /dev/null differ
+[1mdiff --git a/JMF-2.1.1e/mp3plugin.jar b/JMF-2.1.1e/mp3plugin.jar[m
+[1mdeleted file mode 100644[m
+[1mindex a112246..0000000[m
+Binary files a/JMF-2.1.1e/mp3plugin.jar and /dev/null differ
+[1mdiff --git a/bin/interfaz/Gui$EventHandler.class b/bin/interfaz/Gui$EventHandler.class[m
+[1mindex 685bd69..962fda1 100644[m
+Binary files a/bin/interfaz/Gui$EventHandler.class and b/bin/interfaz/Gui$EventHandler.class differ
+[1mdiff --git a/bin/interfaz/Gui.class b/bin/interfaz/Gui.class[m
+[1mindex fcd76f8..d6918c6 100644[m
+Binary files a/bin/interfaz/Gui.class and b/bin/interfaz/Gui.class differ
+[1mdiff --git a/bin/principal/Main.class b/bin/principal/Main.class[m
+[1mindex 56cd1f2..721482f 100644[m
+Binary files a/bin/principal/Main.class and b/bin/principal/Main.class differ
+[1mdiff --git a/bin/sonido/Reproductor.class b/bin/sonido/Reproductor.class[m
+[1mindex e88d358..ab69a55 100644[m
+Binary files a/bin/sonido/Reproductor.class and b/bin/sonido/Reproductor.class differ
+[1mdiff --git a/commons-collections-3.2.2.jar b/commons-collections-3.2.2.jar[m
+[1mdeleted file mode 100644[m
+[1mindex fa5df82..0000000[m
+Binary files a/commons-collections-3.2.2.jar and /dev/null differ
+[1mdiff --git a/jaudiotagger-2.2.3.jar b/jaudiotagger-2.2.3.jar[m
+[1mdeleted file mode 100644[m
+[1mindex 7069a3b..0000000[m
+Binary files a/jaudiotagger-2.2.3.jar and /dev/null differ
+[1mdiff --git a/jaudiotagger-2.2.4-SNAPSHOT-sources.jar b/jaudiotagger-2.2.4-SNAPSHOT-sources.jar[m
+[1mdeleted file mode 100644[m
+[1mindex ee93bd3..0000000[m
+Binary files a/jaudiotagger-2.2.4-SNAPSHOT-sources.jar and /dev/null differ
+[1mdiff --git a/mp3agic-0.8.1-sources.jar b/mp3agic-0.8.1-sources.jar[m
+[1mdeleted file mode 100644[m
+[1mindex a144fc6..0000000[m
+Binary files a/mp3agic-0.8.1-sources.jar and /dev/null differ
+[1mdiff --git a/src/interfaz/Gui.java b/src/interfaz/Gui.java[m
+[1mindex d2147ec..912b84d 100644[m
+[1m--- a/src/interfaz/Gui.java[m
+[1m+++ b/src/interfaz/Gui.java[m
+[36m@@ -2,12 +2,10 @@[m [mpackage interfaz;[m
+ [m
+ import java.awt.Color;[m
+ import java.awt.Font;[m
+[31m-import java.awt.Image;[m
+ import java.awt.event.ActionEvent;[m
+ import java.awt.event.ActionListener;[m
+ import java.awt.image.BufferedImage;[m
+ import java.io.File;[m
+[31m-import java.io.IOException;[m
+ [m
+ import javax.imageio.ImageIO;[m
+ import javax.swing.BorderFactory;[m
+[1mdiff --git a/src/principal/Main.java b/src/principal/Main.java[m
+[1mindex e564891..2d79eb8 100644[m
+[1m--- a/src/principal/Main.java[m
+[1m+++ b/src/principal/Main.java[m
+[36m@@ -1,17 +1,8 @@[m
+ package principal;[m
+ [m
+ import java.io.File;[m
+[31m-import java.nio.Buffer;[m
+[31m-[m
+ import javax.swing.JFileChooser;[m
+[31m-[m
+[31m-import org.apache.commons.collections.buffer.CircularFifoBuffer;[m
+[31m-[m
+[31m-import com.echonest.api.v3.EchoNestException;[m
+[31m-import com.echonest.api.v3.test.EchonestDevShell;[m
+[31m-[m
+ import audioAnalisis.Bpm;[m
+[31m-import audioAnalisis.bpm2;[m
+ import interfaz.Gui;[m
+ import procesamiento.Cola;[m
+ import procesamiento.convierte;[m
+[36m@@ -21,7 +12,6 @@[m [mpublic class Main {[m
+ [m
+ 	public static void main(String args[])[m
+ 	{[m
+[31m-		// RANDOM COMMENT2[m
+ 		Cola cola;[m
+ 		JFileChooser chooser = new JFileChooser();[m
+ 		chooser.setMultiSelectionEnabled(true);[m
+[1mdiff --git a/src/sonido/Reproductor.java b/src/sonido/Reproductor.java[m
+[1mindex 802d4d5..665b721 100644[m
+[1m--- a/src/sonido/Reproductor.java[m
+[1m+++ b/src/sonido/Reproductor.java[m
+[36m@@ -1,11 +1,8 @@[m
+ package sonido;[m
+ import java.io.FileInputStream;[m
+[31m-import java.io.FileNotFoundException;[m
+ [m
+ import interfaz.Gui;[m
+ import javazoom.jl.player.advanced.AdvancedPlayer;[m
+[31m-import javazoom.jl.player.advanced.PlaybackEvent;[m
+[31m-import javazoom.jl.player.advanced.PlaybackListener;[m
+ import procesamiento.Cola;[m
+ import procesamiento.convierte;[m
+ [m
+[36m@@ -17,7 +14,6 @@[m [mimport procesamiento.convierte;[m
+ public class Reproductor implements Runnable{[m
+ [m
+ 	private byte[]array1;[m
+[31m-	private int pausedOnFrame = 0;[m
+ 	[m
+ 	Thread t;[m
+ 	String ruta;[m
+[36m@@ -58,6 +54,7 @@[m [mpublic class Reproductor implements Runnable{[m
+ 		[m
+ 	}[m
+ 	[m
+[32m+[m	[32m@SuppressWarnings("deprecation")[m
+ 	public void siguiente()[m
+ 	{[m
+ 		ruta = cola.siguiente();[m
+[36m@@ -66,6 +63,7 @@[m [mpublic class Reproductor implements Runnable{[m
+ 		t.start();[m
+ 	}[m
+ 	[m
+[32m+[m	[32m@SuppressWarnings("deprecation")[m
+ 	public void anterior()[m
+ 	{[m
+ 		ruta = cola.anterior();[m
+[36m@@ -75,12 +73,14 @@[m [mpublic class Reproductor implements Runnable{[m
+ 		[m
+ 	}[m
+ 	[m
+[32m+[m	[32m@SuppressWarnings("deprecation")[m
+ 	public void pause(){[m
+ 	   [m
+ 		t.suspend();[m
+ 		[m
+ 	}[m
+ 	[m
+[32m+[m	[32m@SuppressWarnings("deprecation")[m
+ 	public void reanudar()[m
+ 	{[m
+ 		t.resume();[m
+[1mdiff --git a/tritonus_share-0.3.6.jar b/tritonus_share-0.3.6.jar[m
+[1mdeleted file mode 100644[m
+[1mindex b9b7ac0..0000000[m
+Binary files a/tritonus_share-0.3.6.jar and /dev/null differ
